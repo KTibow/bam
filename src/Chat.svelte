@@ -2,6 +2,7 @@
   import iconTrash from "@ktibow/iconset-material-symbols/delete-rounded";
   import iconSend from "@ktibow/iconset-material-symbols/send-rounded";
   import Icon from "./Icon.svelte";
+  import Markdown from "./Markdown.svelte";
   import stream from "./stream";
 
   export let groqKey: string;
@@ -43,8 +44,11 @@
 </button>
 <div class="wrapper">
   {#each conversation.toReversed() as message}
-    <div class="message">{message.content}</div>
-    <p class="role">{message.role == "user" ? "You" : "Llama 70b"}</p>
+    {#if message.role == "assistant"}
+      <Markdown text={message.content} />
+    {:else}
+      <div class="user">{message.content}</div>
+    {/if}
   {/each}
 </div>
 <form
@@ -73,16 +77,23 @@
   .wrapper {
     display: flex;
     flex-direction: column-reverse;
-    overflow-y: scroll;
+    overflow: hidden scroll;
+
     height: 100%;
-    padding: 0.5rem 0;
+    margin: 0 -1rem;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+
+    width: 100%;
+    max-width: 40rem;
+    align-self: center;
   }
-  .role {
-    opacity: 0.8;
-    margin-top: 0.5rem;
-  }
-  .message {
+  .user {
     white-space: pre-wrap;
+    background-color: rgb(var(--m3-scheme-primary-container) / 0.2);
+    margin: -0.25rem;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
   }
 
   form {
