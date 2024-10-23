@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@iconify/types": "^2.0.0",
+    "@ktibow/iconset-material-symbols": "^0.0.1729441119",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-svelte": "^3.2.7",
+    "svelte": "^5.1.0",
+    "vite": "^5.4.10"
+  }
+}
