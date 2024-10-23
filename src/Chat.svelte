@@ -39,7 +39,7 @@
   }
 </script>
 
-<button on:click={() => (conversation = [])}>
+<button style:margin="0.5rem 0.5rem 0 0.5rem" on:click={() => (conversation = [])}>
   <Icon icon={iconTrash} width="1.5rem" height="1.5rem" />
 </button>
 <div class="wrapper">
@@ -52,6 +52,7 @@
   {/each}
 </div>
 <form
+  style:margin="0 0.5rem 0.5rem 0.5rem"
   on:submit|preventDefault={(e) => {
     const textarea = e.currentTarget.querySelector("textarea");
 
@@ -80,14 +81,14 @@
     overflow: hidden scroll;
 
     height: 100%;
-    margin: 0 -1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
     gap: 0.5rem;
 
     width: 100%;
     max-width: 40rem;
     align-self: center;
   }
+
   .user {
     white-space: pre-wrap;
     background-color: rgb(var(--m3-scheme-primary-container) / 0.2);

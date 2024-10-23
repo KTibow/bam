@@ -3,11 +3,13 @@ body {
   accent-color: rgb(var(--m3-scheme-primary));
   background-color: rgb(var(--m3-scheme-background));
   color: rgb(var(--m3-scheme-on-background));
-  font-family: Atkinson Hyperlegible, system-ui, sans-serif;
+  font-family:
+    Atkinson Hyperlegible,
+    system-ui,
+    sans-serif;
 
   display: flex;
   flex-direction: column;
-  padding: 1rem;
   height: 100dvh;
 }
 * {
