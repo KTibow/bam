@@ -39,7 +39,7 @@
   }
 </script>
 
-<button style:margin="0.5rem 0.5rem 0 0.5rem" on:click={() => (conversation = [])}>
+<button on:click={() => (conversation = [])}>
   <Icon icon={iconTrash} width="1.5rem" height="1.5rem" />
 </button>
 <div class="wrapper">
@@ -123,5 +123,8 @@
     padding: 0 0.5rem;
 
     cursor: pointer;
+  }
+  button:nth-child(1) {
+    border-radius: 0 0.5rem 0.5rem 0;
   }
 </style>
