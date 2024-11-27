@@ -7,6 +7,21 @@
 
   export let groqKey: string;
 
+  const getModel = async () => {
+    if (localStorage.model) return localStorage.model;
+    const r = await fetch("https://api.groq.com/openai/v1/models", {
+      headers: {
+        Authorization: `Bearer ${groqKey}`,
+      },
+    });
+    const models = await r.json();
+
+    const model = models.data.find((m) => m.id == "llama-3.1-70b-specdec")
+      ? "llama-3.1-70b-specdec"
+      : "llama-3.1-70b-versatile";
+    localStorage.model = model;
+    return model;
+  };
   const generate = async (prompt: string) => {
     conversation = [...conversation, { role: "user", content: prompt }];
     const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -16,7 +31,7 @@
         Authorization: `Bearer ${groqKey}`,
       },
       body: JSON.stringify({
-        model: "llama-3.1-70b-versatile",
+        model: await getModel(),
         messages: conversation,
         stream: true,
         temperature: 0.7,
