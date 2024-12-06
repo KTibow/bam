@@ -16,9 +16,9 @@
     });
     const models = await r.json();
 
-    const model = models.data.find((m) => m.id == "llama-3.1-70b-specdec")
-      ? "llama-3.1-70b-specdec"
-      : "llama-3.1-70b-versatile";
+    const model = models.data.find((m) => m.id == "llama-3.3-70b-specdec")
+      ? "llama-3.3-70b-specdec"
+      : "llama-3.3-70b-versatile";
     localStorage.model = model;
     return model;
   };
