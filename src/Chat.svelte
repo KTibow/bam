@@ -6,6 +6,7 @@
   import stream from "./stream";
 
   export let groqKey: string;
+  let textarea: HTMLTextAreaElement;
 
   const getModel = async () => {
     if (localStorage.model) return localStorage.model;
@@ -46,6 +47,13 @@
     }
   };
 
+  const maybeFocus = (e: KeyboardEvent) => {
+    const isAlphanumeric = /^[a-zA-Z0-9]$/.test(e.key);
+    if (e.target == document.body && isAlphanumeric && !e.ctrlKey) {
+      textarea.focus();
+    }
+  };
+
   let conversation: { role: string; content: string }[] = [];
   const searchParams = new URLSearchParams(window.location.search);
   const q = searchParams.get("q");
@@ -54,6 +62,7 @@
   }
 </script>
 
+<svelte:window on:keydown={maybeFocus} />
 <button on:click={() => (conversation = [])}>
   <Icon icon={iconTrash} width="1.5rem" height="1.5rem" />
 </button>
@@ -75,10 +84,9 @@
     textarea.value = "";
   }}
 >
-  <!-- svelte-ignore a11y_autofocus -->
   <textarea
     name="query"
-    autofocus
+    bind:this={textarea}
     on:keydown={(e) => {
       if (e.key == "Enter" && !e.shiftKey) {
         e.currentTarget.form.requestSubmit();
