@@ -75,8 +75,10 @@
     textarea.value = "";
   }}
 >
+  <!-- svelte-ignore a11y_autofocus -->
   <textarea
     name="query"
+    autofocus
     on:keydown={(e) => {
       if (e.key == "Enter" && !e.shiftKey) {
         e.currentTarget.form.requestSubmit();
