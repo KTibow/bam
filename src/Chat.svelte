@@ -8,8 +8,8 @@
   export let groqKey: string;
   let textarea: HTMLTextAreaElement;
 
-  const getModel = async () => {
-    if (localStorage.model) return localStorage.model;
+  const hasSpecdec = async () => {
+    if (localStorage.bamHasSpecdec) return JSON.parse(localStorage.bamHasSpecdec);
     const r = await fetch("https://api.groq.com/openai/v1/models", {
       headers: {
         Authorization: `Bearer ${groqKey}`,
@@ -17,27 +17,43 @@
     });
     const models = await r.json();
 
-    const model = models.data.find((m) => m.id == "llama-3.3-70b-specdec")
-      ? "llama-3.3-70b-specdec"
-      : "llama-3.3-70b-versatile";
-    localStorage.model = model;
-    return model;
+    const hasSpecdec = models.data.find((m) => m.id == "llama-3.3-70b-specdec") != undefined;
+    localStorage.bamHasSpecdec = JSON.stringify(hasSpecdec);
+    return hasSpecdec;
   };
   const generate = async (prompt: string) => {
     conversation = [...conversation, { role: "user", content: prompt }];
-    const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${groqKey}`,
-      },
-      body: JSON.stringify({
-        model: await getModel(),
-        messages: conversation,
-        stream: true,
-        temperature: 0.7,
-      }),
-    });
+    let r: Response;
+    if (await hasSpecdec()) {
+      r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${groqKey}`,
+        },
+        body: JSON.stringify({
+          model: "llama-3.3-70b-specdec",
+          messages: conversation,
+          stream: true,
+          temperature: 0.7,
+        }),
+      });
+    }
+    if (!r || !r.ok) {
+      r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${groqKey}`,
+        },
+        body: JSON.stringify({
+          model: "llama-3.3-70b-versatile",
+          messages: conversation,
+          stream: true,
+          temperature: 0.7,
+        }),
+      });
+    }
 
     const message = { role: "assistant", content: "" };
     conversation = [...conversation, message];
