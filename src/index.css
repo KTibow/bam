@@ -1,10 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700");
 body {
   accent-color: rgb(var(--m3-scheme-primary));
   background-color: rgb(var(--m3-scheme-background));
   color: rgb(var(--m3-scheme-on-background));
   font-family:
-    Atkinson Hyperlegible,
+    Inter,
+    Roboto,
     system-ui,
     sans-serif;
 
