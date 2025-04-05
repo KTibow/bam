@@ -12,7 +12,7 @@
   //   if (localStorage.bamHasSpecdec) return JSON.parse(localStorage.bamHasSpecdec);
   //   const r = await fetch("https://api.groq.com/openai/v1/models", {
   //     headers: {
-  //       Authorization: `Bearer ${groqKey}`,
+  //       authorization: `Bearer ${groqKey}`,
   //     },
   //   });
   //   const models = await r.json();
@@ -28,8 +28,8 @@
     //   r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     //     method: "POST",
     //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${groqKey}`,
+    //       "content-type": "application/json",
+    //       authorization: `Bearer ${groqKey}`,
     //     },
     //     body: JSON.stringify({
     //       model: "llama-3.3-70b-specdec",
@@ -43,8 +43,8 @@
       r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${groqKey}`,
+          "content-type": "application/json",
+          authorization: `Bearer ${groqKey}`,
         },
         body: JSON.stringify({
           model: "meta-llama/llama-4-scout-17b-16e-instruct",
