@@ -8,37 +8,37 @@
   export let groqKey: string;
   let textarea: HTMLTextAreaElement;
 
-  const hasSpecdec = async () => {
-    if (localStorage.bamHasSpecdec) return JSON.parse(localStorage.bamHasSpecdec);
-    const r = await fetch("https://api.groq.com/openai/v1/models", {
-      headers: {
-        Authorization: `Bearer ${groqKey}`,
-      },
-    });
-    const models = await r.json();
+  // const hasSpecdec = async () => {
+  //   if (localStorage.bamHasSpecdec) return JSON.parse(localStorage.bamHasSpecdec);
+  //   const r = await fetch("https://api.groq.com/openai/v1/models", {
+  //     headers: {
+  //       Authorization: `Bearer ${groqKey}`,
+  //     },
+  //   });
+  //   const models = await r.json();
 
-    const hasSpecdec = models.data.find((m) => m.id == "llama-3.3-70b-specdec") != undefined;
-    localStorage.bamHasSpecdec = JSON.stringify(hasSpecdec);
-    return hasSpecdec;
-  };
+  //   const hasSpecdec = models.data.find((m) => m.id == "llama-3.3-70b-specdec") != undefined;
+  //   localStorage.bamHasSpecdec = JSON.stringify(hasSpecdec);
+  //   return hasSpecdec;
+  // };
   const generate = async (prompt: string) => {
     conversation = [...conversation, { role: "user", content: prompt }];
     let r: Response;
-    if (await hasSpecdec()) {
-      r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${groqKey}`,
-        },
-        body: JSON.stringify({
-          model: "llama-3.3-70b-specdec",
-          messages: conversation,
-          stream: true,
-          temperature: 0.7,
-        }),
-      });
-    }
+    // if (await hasSpecdec()) {
+    //   r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${groqKey}`,
+    //     },
+    //     body: JSON.stringify({
+    //       model: "llama-3.3-70b-specdec",
+    //       messages: conversation,
+    //       stream: true,
+    //       temperature: 0.7,
+    //     }),
+    //   });
+    // }
     if (!r || !r.ok) {
       r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
@@ -47,7 +47,7 @@
           Authorization: `Bearer ${groqKey}`,
         },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
+          model: "meta-llama/llama-4-scout-17b-16e-instruct",
           messages: conversation,
           stream: true,
           temperature: 0.7,
